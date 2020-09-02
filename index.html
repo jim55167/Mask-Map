@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>口罩地圖</title>
+
+    <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"></link>
+    <link href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"></link>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <link rel="stylesheet" href="css/all.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="info">
+        <div class="maskTop">
+          <div class="day">
+            <h1>{{day}}</h1>
+          </div>
+          <div class="date">
+            <span>{{date}}</span>
+            <p>身分證末碼<a>{{isBuy}}</a>可購買</p>
+            <select class="chooseArea" @change='filterData(event)' v-model='select'>
+                <option value=""> -- 請選擇城市 -- </option>
+                <option  v-for='(item, city) in county' :key="city" :value="item">{{item}}</option>
+              </select>
+          </div>         
+        </div>
+        <ul class="maskList">
+          <li v-for='(store, list) in showList' :key='list'>
+            <h3>
+              {{store.properties.name}}
+              <button class="checkBtn" @click='focusLocation(store)'>點我觀看</button>
+            </h3>
+            <h4>{{store.properties.address}}</h4>
+            <a href="tel:{{store.properties.phone}}"><span>{{store.properties.phone}}</span></a>
+            <h5>最後更新時間：{{store.properties.updated}}</h5>
+            <p>備註：{{store.properties.note}}</p>
+            <div class="maskTotal">
+              <h5>成人數量：{{store.properties.mask_adult}}</h5>
+              <h5>兒童數量：{{store.properties.mask_child}}</h5>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="map">      
+      </div>
+      
+      <div class="loadingContainer" v-if="loading">
+         <div class="loading" >
+            <div class="circle">
+            </div>
+            <span> 讀取中...</span>
+         </div>  
+  </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
+
